@@ -31,12 +31,13 @@ public enum NetworkError: String, Error {
     case serverError = "Server error"
     case noResponse = "No response"
     case success = "Success"
-
-
 }
 
 public enum Route: String{
     case movies = "discover/movie"
+    case token = "authentication/token/new"
+    case session = "authentication/session/new"
+    case account = "account"
 }
 
 struct Request {
@@ -55,11 +56,11 @@ struct Request {
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10.0)
         request.httpMethod = method.rawValue
         request.httpBody = body
-        try configureParametersAndHeaders(parameters: parameters, headers: headers, request: &request)
+        try configureParametersAndHeader(parameters: parameters, headers: headers, request: &request)
         return request
     }
     
-    static func configureParametersAndHeaders(parameters: [String: Any]?,
+    static func configureParametersAndHeader(parameters: [String: Any]?,
                                                   headers: [String: String]?,
                                                   request: inout URLRequest) throws {
         do {
